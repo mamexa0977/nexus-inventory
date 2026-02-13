@@ -1,6 +1,7 @@
 from django.db import models
 
 class Category(models.Model):
+    """Represents a product category (e.g., Electronics, Clothing)."""
     name = models.CharField(max_length=50, unique=True)
     description = models.TextField(blank=True)
     
@@ -8,6 +9,7 @@ class Category(models.Model):
         return self.name
 
 class Supplier(models.Model):
+    """Represents a supplier who provides items."""
     name = models.CharField(max_length=100)
     phone = models.CharField(max_length=20, blank=True)
     email = models.EmailField(blank=True)
@@ -16,6 +18,7 @@ class Supplier(models.Model):
         return self.name
 
 class Customer(models.Model):
+    """Represents a customer who buys items."""
     name = models.CharField(max_length=100)
     phone = models.CharField(max_length=20, unique=True, blank=True)
     email = models.EmailField(unique=True, blank=True)
@@ -27,6 +30,7 @@ class Customer(models.Model):
         return self.name
 
 class Item(models.Model):
+    """Represents a product/item in inventory."""
     name = models.CharField(max_length=100)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
     stock_quantity = models.IntegerField(default=0)
@@ -35,6 +39,7 @@ class Item(models.Model):
         return self.name
 
 class Purchase(models.Model):
+    """Records a purchase order from a supplier."""
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
     purchase_date = models.DateField(auto_now_add=True)
     
